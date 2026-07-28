@@ -140,8 +140,35 @@
         </div>
       </li>
 
-      <li class="q">
+      <li class="q q--block">
         <span class="q__n">7</span>
+        <div>
+          <div class="q__t">Чи буде SSH-доступ до хостингу? <span class="q__tag">Блокує фікс</span></div>
+          <div class="q__w">Для сучасного Drupal це базова вимога, а не побажання: встановлення ядра
+            та модулів, імпорт бази даних, застосування конфігурації та оновлення виконуються
+            <strong>з командного рядка сервера</strong>. Хостинг лише з FTP і панеллю керування
+            для цього не підходить — переносити файли по FTP можна, а поставити залежності
+            та підняти базу вже ні.
+            <strong>Без SSH змінюються і підхід, і строки, і вартість</strong> — тому просимо
+            підтвердити це до фіксації суми.</div>
+        </div>
+      </li>
+
+      <li class="q">
+        <span class="q__n">8</span>
+        <div>
+          <div class="q__t">Чи відповідає середовище технічним вимогам?</div>
+          <div class="q__w">Мінімум, який потрібен для цієї версії Drupal:
+            <strong>PHP 8.3 або новіший</strong> · <strong>MySQL / MariaDB</strong> (або PostgreSQL) ·
+            <strong>Composer</strong> на сервері · <strong>SSH</strong> · можливість запускати cron ·
+            ліміт памʼяті PHP від 256 МБ · SSL-сертифікат · достатньо дискового простору
+            під медіафайли та відео.
+            Якщо якогось пункту немає — скажіть одразу, підберемо конфігурацію разом.</div>
+        </div>
+      </li>
+
+      <li class="q">
+        <span class="q__n">9</span>
         <div>
           <div class="q__t">Які вимоги корпоративної безпеки до хостингу?</div>
           <div class="q__w">Регіон розміщення даних, журналювання, захисний екран, тестування на проникнення,
@@ -158,7 +185,7 @@
     <ol class="qlist">
 
       <li class="q q--block">
-        <span class="q__n">8</span>
+        <span class="q__n">10</span>
         <div>
           <div class="q__t">Підтверджуєте, що переклад — на стороні Замовника? <span class="q__tag">Блокує фікс</span></div>
           <div class="q__w">Наша оцінка виходить із того, що <strong>готові українські тексти надає Замовник</strong>
@@ -168,7 +195,7 @@
       </li>
 
       <li class="q q--block">
-        <span class="q__n">9</span>
+        <span class="q__n">11</span>
         <div>
           <div class="q__t">Скільки матеріалів у розділі Epifundamentals? <span class="q__tag">Блокує фікс</span></div>
           <div class="q__w">ТЗ каже «всі, крім двох», але не називає загальної кількості.
@@ -177,7 +204,7 @@
       </li>
 
       <li class="q">
-        <span class="q__n">10</span>
+        <span class="q__n">12</span>
         <div>
           <div class="q__t">Хто наповнює контент і в якому форматі надійдуть тексти?</div>
           <div class="q__w">Два питання в одному, бо вони визначають обсяг.
@@ -189,7 +216,7 @@
       </li>
 
       <li class="q">
-        <span class="q__n">11</span>
+        <span class="q__n">13</span>
         <div>
           <div class="q__t">Коли будуть адаптовані відео і де вони розміщуються?</div>
           <div class="q__w">Власний плеєр на сайті чи зовнішній відеосервіс? Заміна можлива
@@ -205,7 +232,7 @@
     <ol class="qlist">
 
       <li class="q">
-        <span class="q__n">12</span>
+        <span class="q__n">14</span>
         <div>
           <div class="q__t">Ідентифікатори аналітики для української версії</div>
           <div class="q__w">Потрібні власні: ідентифікатор Google Analytics та параметри
@@ -215,7 +242,7 @@
       </li>
 
       <li class="q">
-        <span class="q__n">13</span>
+        <span class="q__n">15</span>
         <div>
           <div class="q__t">Панель згоди на cookie — чия ліцензія?</div>
           <div class="q__w">На глобальному сайті вона підключена як <strong>зовнішній платний сервіс
@@ -225,7 +252,7 @@
       </li>
 
       <li class="q">
-        <span class="q__n">14</span>
+        <span class="q__n">16</span>
         <div>
           <div class="q__t">Коди погодження матеріалів (Veeva) для України</div>
           <div class="q__w">У футері глобального сайту виводяться ідентифікатори погодження.
@@ -234,7 +261,7 @@
       </li>
 
       <li class="q">
-        <span class="q__n">15</span>
+        <span class="q__n">17</span>
         <div>
           <div class="q__t">Юридичні тексти для української версії</div>
           <div class="q__w">Політика конфіденційності, умови використання, юридичні повідомлення
@@ -250,7 +277,7 @@
     <ol class="qlist">
 
       <li class="q">
-        <span class="q__n">16</span>
+        <span class="q__n">18</span>
         <div>
           <div class="q__t">Підтверджуєте вимкнення перевірки статусу медпрацівника?</div>
           <div class="q__w">У глобальному коді є перевірка HCP та вибір країни. За п.10 ТЗ
@@ -260,7 +287,7 @@
       </li>
 
       <li class="q">
-        <span class="q__n">17</span>
+        <span class="q__n">19</span>
         <div>
           <div class="q__t">Хто фінально приймає роботу?</div>
           <div class="q__w">Агентство чи представництво компанії? Чи потрібне погодження
@@ -269,7 +296,7 @@
       </li>
 
       <li class="q">
-        <span class="q__n">18</span>
+        <span class="q__n">20</span>
         <div>
           <div class="q__t">Скільки раундів правок закладаємо?</div>
           <div class="q__w">Наш стандарт — <strong>до 2 раундів на етап</strong>. Якщо процес погодження
@@ -278,7 +305,7 @@
       </li>
 
       <li class="q">
-        <span class="q__n">19</span>
+        <span class="q__n">21</span>
         <div>
           <div class="q__t">Який формат підтримки після запуску?</div>
           <div class="q__w">Пропонуємо <strong>погодинну оплату або місячний пакет годин</strong>
@@ -288,7 +315,7 @@
       </li>
 
       <li class="q">
-        <span class="q__n">20</span>
+        <span class="q__n">22</span>
         <div>
           <div class="q__t">Чи є цільова дата запуску?</div>
           <div class="q__w">Строк наведений на сторінці оцінки. Якщо є жорстка дата —
