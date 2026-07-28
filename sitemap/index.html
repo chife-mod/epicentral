@@ -494,7 +494,9 @@ const CONFIG = {
   uahRate: 44.8568, uahDate: "28.07.2026",   // курс НБУ, фіксується на дату договору
   fop: 0.06,                 // ФОП 3 гр.: 5% ЄП + 1% військовий збір
   finalUSD: null,            // null = считаем; число = утверждённый фикс-Total
-  commentsMin: 0.10, commentsMax: 0.10, mgmtMin: 0.10, mgmtMax: 0.10, hoursPerDay: 6,
+  /* Менеджмент заведено ЯВНИМ блоком годин у SITEMAP (вказівка Олега 28.07), тому
+     відсоткова надбавка mgmt = 0 — інакше подвійний рахунок. */
+  commentsMin: 0.10, commentsMax: 0.10, mgmtMin: 0, mgmtMax: 0, hoursPerDay: 6,
 };
 
 /* Client-facing rollup figures — что покупает клиент (НЕ внутренние блоки/плитки). */
@@ -587,6 +589,13 @@ const SITEMAP = [
       { name: "Адмінпанель і ролі", desc: "Ролі редакторів Замовника для самостійного оновлення контенту (п.16 ТЗ).", min: 1, max: 1.5 },
       { name: "Технічна документація", desc: "Структура сайту, спосіб оновлення контенту, процедура розгортання (п.11 ТЗ).", min: 2, max: 3 },
       { name: "Навчання команди", desc: "Онлайн-сесія для редакторів: оновлення контенту та відкриття прихованих розділів.", min: 1.5, max: 2 },
+  ]},
+
+  { name: "Проєктний менеджмент", work: true, tag: "Менеджмент",
+    caption: "Наскрізний блок на весь проєкт — окремим рядком, а не відсотком.",
+    sections: [
+      { name: "Ведення проєкту", desc: "Планування етапів, статуси, координація з командою Замовника, контроль строків і залежностей від матеріалів.", min: 5, max: 7 },
+      { name: "Погодження та ітерації", desc: "Збір і систематизація правок, узгодження змін, контроль раундів (включено до 2 раундів на етап).", min: 3, max: 5 },
   ]},
 ];
 
@@ -765,8 +774,11 @@ const blockRows = blocks.map((b) => {
 let rows = `
   ${blockRows}
   <tr class="row-sub"><td>Субтотал — робота${isFix() ? "" : ` (${fmtH(grandMin)}–${fmtH(grandMax)} год)`}</td>${cell2(subMin, subMax)}</tr>
-  <tr><td>Коментарі та незаплановані роботи (${pctLabel(CONFIG.commentsMin, CONFIG.commentsMax)})</td>${cell2(commMin, commMax)}</tr>
-  <tr><td>Менеджмент та комунікація (${pctLabel(CONFIG.mgmtMin, CONFIG.mgmtMax)})</td>${cell2(mgmtMin, mgmtMax)}</tr>`;
+  <tr><td>Коментарі та незаплановані роботи (${pctLabel(CONFIG.commentsMin, CONFIG.commentsMax)})</td>${cell2(commMin, commMax)}</tr>`;
+/* Рядок менеджменту показуємо ТІЛЬКИ якщо він відсотковий. Коли менеджмент заведено
+   явним блоком годин у SITEMAP, відсоток = 0 і рядок не малюємо (щоб не було нуля в таблиці). */
+if (CONFIG.mgmtMin || CONFIG.mgmtMax)
+  rows += `<tr><td>Менеджмент та комунікація (${pctLabel(CONFIG.mgmtMin, CONFIG.mgmtMax)})</td>${cell2(mgmtMin, mgmtMax)}</tr>`;
 if (FOP) rows += `<tr><td>ФОП — єдиний податок (${Math.round(FOP * 100)}%)</td>${cell2(fopMin, fopMax)}</tr>`;
 rows += isFix()
   ? `<tr class="is-total"><td>Разом, $${FOP ? " · з ФОП" : ""} · фікс</td><td>${fmtUSD(totMax)}</td></tr>`
