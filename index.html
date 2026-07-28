@@ -289,7 +289,7 @@ body {
     </div>
     <div class="headline__cell">
       <div class="headline__l">Етапів</div>
-      <div class="headline__v">5</div>
+      <div class="headline__v" id="hlStages">—</div>
     </div>
     <div class="headline__cell headline__cell--accent">
       <div class="headline__l">Попередня оцінка</div>
@@ -387,6 +387,7 @@ body {
     var usd = function (n) { return "$" + Math.round(n).toLocaleString("en-US").replace(/,/g, " "); };
     if (f.totalMin) document.getElementById("hlTotal").innerHTML = usd(f.totalMin) + "–<small>" + usd(f.totalMax) + "</small>";
     if (f.weeks)    document.getElementById("hlWeeks").innerHTML = f.weeks + " <small>тижнів</small>";
+    if (f.stages)   document.getElementById("hlStages").textContent = f.stages;
   })();
 </script>
 <script defer src="shared/service-menu.js"></script>
