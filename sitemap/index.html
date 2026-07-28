@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>EpiCentral UA — Структура та попередня оцінка</title>
+
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+<link rel="stylesheet" href="../shared/service-menu.css">
+<script src="../shared/figures.js"></script>
+
+<style>
+:root {
+  --brand-blue:       #116490;
+  --brand-blue-light: #9FBACD;
+  --bg-top:    #0a1219;
+  --bg-bottom: #1e2a35;
+  --charcoal:  #1e2a35;
+  --white:     #fff;
+  --accent:    #4B6CFF;
+  --line:      rgba(159, 186, 205, 0.3);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: var(--charcoal);
+  color: var(--white);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  overflow-x: hidden;            /* only .board scrolls horizontally */
+}
+
+.wrap {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 32px 16px;
+}
+
+/* ─── Back link + header ─────────────────────────────────────── */
+
+/* brand logo — sticky top bar on every page, click → main dashboard */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  padding: 0 max(32px, calc(50vw - 508px)) 16px;
+  background: rgba(10, 18, 25, 0.82);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.brand { display: inline-block; height: 53px; }
+.brand img { display: block; height: 100%; width: auto; }
+
+.eyebrow {
+  display: inline-block; font-size: 12px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--brand-blue-light); margin-bottom: 16px;
+}
+
+/* 2-column header: title left, description right */
+.head { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: end; }
+@media (max-width: 760px) { .head { grid-template-columns: 1fr; gap: 14px; align-items: start; } }
+
+.page-title {
+  font-size: clamp(30px, 4.5vw, 46px); font-weight: 700;
+  letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 0;
+}
+
+.lede {
+  font-size: 14px; line-height: 1.55;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Estimate section — moved BELOW the sitemap (Sitemap first, Estimate after) */
+.estimate { margin-top: 24px; padding-top: 16px; }
+.estimate__title {
+  font-size: 13px; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 0.14em; color: rgba(255, 255, 255, 0.45); margin-bottom: 20px;
+}
+
+/* Stages strip */
+.stages-wrap { margin-top: 8px; }
+.stages { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.stage-card { padding: 18px 18px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
+.stage-card__n { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-blue-light); }
+.stage-card__pay { font-size: 9px; font-weight: 600; letter-spacing: 0.05em; color: #c3cdff; background: rgba(75,108,255,0.16); border: 1px solid rgba(75,108,255,0.4); border-radius: 4px; padding: 2px 6px; text-transform: none; }
+.stage-card__t { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; margin: 10px 0 6px; }
+.stage-card__d { font-size: 12.5px; line-height: 1.45; color: rgba(255,255,255,0.5); }
+
+/* ─── Notice + legend ────────────────────────────────────────── */
+
+.notice {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 18px;
+  background: rgba(255, 173, 51, 0.08);
+  border: 1px solid rgba(255, 173, 51, 0.28);
+  border-radius: 10px;
+  font-size: 13px; line-height: 1.5;
+  color: rgba(255, 220, 170, 0.92);
+  margin: 24px 0 0;
+}
+.notice strong { color: #ffce8a; font-weight: 600; }
+.notice svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; color: #ffce8a; }
+.notice--foot { margin-top: 48px; }
+
+.legend {
+  display: flex; flex-wrap: wrap; gap: 18px;
+  margin-top: 24px; font-size: 12px; color: rgba(255,255,255,0.5);
+}
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.legend i {
+  font-style: normal; font-size: 9px; font-weight: 600; letter-spacing: 0.06em;
+  padding: 2px 6px; border-radius: 4px;
+}
+.b-tbc { color: #ffce8a; background: rgba(255,173,51,0.12); border: 1px solid rgba(255,173,51,0.3); }
+.b-p2  { color: #c3cdff; background: rgba(75,108,255,0.16); border: 1px solid rgba(75,108,255,0.4); }
+.b-sep { color: #e0b3ff; background: rgba(168,85,247,0.14); border: 1px solid rgba(168,85,247,0.4); }
+
+/* ─── Rollup stat strip ──────────────────────────────────────── */
+
+.rollup {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px; background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px; overflow: hidden; margin-top: 32px;
+}
+.stat { background: linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 100%); padding: 22px 20px; }
+.stat--accent { background: linear-gradient(180deg, rgba(75,108,255,0.16) 0%, rgba(75,108,255,0.06) 100%); }
+.stat__label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.45); margin-bottom: 10px; }
+.stat__value { font-size: 25px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; line-height: 1; }
+.stat__value small { font-size: 13px; font-weight: 500; color: rgba(255, 255, 255, 0.5); }
+.stat--accent .stat__value { color: #c3cdff; }
+
+/* ─── Horizontal sitemap board ───────────────────────────────── */
+
+.board-hint {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.4); margin: 28px 0 16px;
+}
+.board-hint svg { width: 15px; height: 15px; }
+
+.board {
+  display: flex; flex-direction: row; align-items: flex-start; gap: 28px;
+  overflow-x: auto; overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  cursor: grab;                  /* drag-to-pan affordance */
+  /* left edge aligns with the centered .wrap content (max 1080, 32px pad) */
+  padding: 8px max(32px, calc(50vw - 508px)) 40px;
+}
+.board:active { cursor: grabbing; }
+.board::-webkit-scrollbar { height: 10px; }
+.board::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 999px; }
+.board::-webkit-scrollbar-thumb { background: rgba(159,186,205,0.25); border-radius: 999px; }
+.board::-webkit-scrollbar-thumb:hover { background: rgba(159,186,205,0.4); }
+
+/* ─── Page column (vertical) ─────────────────────────────────── */
+
+.column { flex: 0 0 300px; width: 300px; display: flex; flex-direction: column; align-items: center; }
+
+.node {
+  width: 100%; background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; overflow: hidden;
+}
+.node.is-child { border-style: dashed; border-color: rgba(159,186,205,0.3); }
+.node.is-system { border-color: rgba(75,108,255,0.28); background: rgba(75,108,255,0.04); }
+.node.is-work { border-color: rgba(168,85,247,0.32); background: rgba(168,85,247,0.05); }
+
+.node__head { display: flex; flex-direction: column; gap: 8px; padding: 13px 14px; background: rgba(255, 255, 255, 0.04); border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+.node.is-system .node__head { background: rgba(75,108,255,0.08); }
+.node.is-work .node__head { background: rgba(168,85,247,0.09); }
+
+.node__headtop { display: flex; align-items: center; gap: 9px; min-height: 26px; }
+
+.node__num { flex-shrink: 0; width: 26px; height: 26px; display: grid; place-items: center; background: rgba(159, 186, 205, 0.12); border: 1px solid rgba(159, 186, 205, 0.24); border-radius: 7px; font-size: 12px; font-weight: 700; color: var(--brand-blue-light); font-variant-numeric: tabular-nums; }
+
+.node__name { flex: 1; min-width: 0; font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.node__sub-wrap { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.node__sub { font-size: 12px; font-weight: 700; color: var(--brand-blue-light); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.node__price { font-size: 11px; font-weight: 600; color: #c3cdff; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.node__price--excl { color: rgba(255,206,138,0.85); }
+
+/* badge row — sits UNDER the page name so long names aren't clipped */
+.node__badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.node__badge { font-size: 9px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; padding: 2px 7px; border-radius: 5px; }
+.node__badge--popup   { color: #ffce8a; background: rgba(255,173,51,0.12); border: 1px solid rgba(255,173,51,0.3); }
+.node__badge--subpage { color: var(--brand-blue-light); background: rgba(159,186,205,0.12); border: 1px solid rgba(159,186,205,0.28); }
+.node__badge--system  { color: #c3cdff; background: rgba(75,108,255,0.16); border: 1px solid rgba(75,108,255,0.4); }
+.node__badge--work    { color: #e0b3ff; background: rgba(168,85,247,0.16); border: 1px solid rgba(168,85,247,0.42); }
+.node__badge--p2      { color: #c3cdff; background: rgba(75,108,255,0.16); border: 1px solid rgba(75,108,255,0.4); }
+.node__badge--tag     { color: var(--brand-blue-light); background: rgba(159,186,205,0.12); border: 1px solid rgba(159,186,205,0.28); }
+.node__badge--excl    { color: #ffce8a; background: rgba(255,173,51,0.12); border: 1px solid rgba(255,173,51,0.38); }
+.node.is-excluded { opacity: 0.72; border-style: dashed; border-color: rgba(255,173,51,0.35); }
+.node__sub--excl { color: rgba(255,206,138,0.9) !important; }
+
+.node__sections { display: flex; flex-direction: column; gap: 8px; padding: 12px; }
+
+/* caption — "what exactly we deliver" above the tiles inside a node (optional) */
+.node__caption { padding: 10px 12px; font-size: 11px; line-height: 1.45; color: rgba(255,255,255,0.58); border-bottom: 1px dashed rgba(255,255,255,0.12); }
+.node__caption strong { color: rgba(255,255,255,0.82); font-weight: 600; }
+.node.is-work .node__caption { color: rgba(224,179,255,0.92); background: rgba(168,85,247,0.05); border-bottom-color: rgba(168,85,247,0.18); }
+.node.is-work .node__caption strong { color: #e9ccff; }
+
+/* ─── Section tile ───────────────────────────────────────────── */
+
+.tile { padding: 11px 12px; background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 9px; transition: border-color 180ms ease, background 180ms ease; }
+.tile:hover { border-color: rgba(159,186,205,0.3); background: rgba(255,255,255,0.06); }
+.tile__row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.tile__name { font-size: 13.5px; font-weight: 600; letter-spacing: -0.005em; min-width: 0; line-height: 1.3; overflow-wrap: anywhere; }
+.tile__hours { flex-shrink: 0; display: inline-flex; align-items: baseline; gap: 3px; padding: 3px 8px; background: rgba(159, 186, 205, 0.12); border: 1px solid rgba(159, 186, 205, 0.22); border-radius: 999px; font-size: 11.5px; font-weight: 700; color: var(--brand-blue-light); font-variant-numeric: tabular-nums; }
+.tile__hours small { font-size: 9px; font-weight: 500; opacity: 0.7; }
+.tile__desc { font-size: 11.5px; line-height: 1.4; color: rgba(255, 255, 255, 0.48); margin-top: 6px; }
+.tile__badges { display: inline-flex; gap: 4px; margin-left: 6px; vertical-align: middle; }
+.tile__badges i { font-style: normal; font-size: 8px; font-weight: 600; letter-spacing: 0.05em; padding: 1px 5px; border-radius: 4px; }
+
+/* ─── Connector ──────────────────────────────────────────────── */
+
+.connector { width: 2px; height: 28px; background: var(--line); }
+.connector--popup { background: repeating-linear-gradient(180deg, var(--line) 0 4px, transparent 4px 8px); }
+
+/* ─── Estimate breakdown ─────────────────────────────────────── */
+
+.breakdown { max-width: 1080px; margin: 24px auto 0; padding: 32px 32px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.breakdown__title { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255, 255, 255, 0.45); margin-bottom: 20px; }
+.breakdown__table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.breakdown__table th, .breakdown__table td { text-align: right; padding: 12px 16px; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.breakdown__table th:first-child, .breakdown__table td:first-child { text-align: left; color: rgba(255,255,255,0.7); }
+.breakdown__table thead th { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.4); }
+.breakdown__table tr.row-sub td { font-weight: 600; border-top: 1px solid rgba(255, 255, 255, 0.14); }
+.breakdown__table tr.row-sub td:first-child { color: rgba(255,255,255,0.85); }
+.breakdown__table tr.row-sub td:not(:first-child) { font-size: 20px; font-weight: 700; }
+.breakdown__table tr.is-total td { font-weight: 700; font-size: 16px; border-bottom: none; border-top: 2px solid rgba(255, 255, 255, 0.16); padding-top: 16px; }
+.breakdown__table tr.is-total td:not(:first-child) { color: #c3cdff; font-size: 28px; white-space: nowrap; }
+.breakdown__table tr.is-total .mm { font-size: 11px; font-weight: 500; color: #c3cdff; opacity: 0.7; margin-right: 8px; vertical-align: baseline; }
+.breakdown__note { margin-top: 16px; font-size: 12px; color: rgba(255, 255, 255, 0.4); line-height: 1.5; }
+.footer-pad { height: 120px; }
+
+/* References / About */
+.refs { margin-top: 8px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+.refs__about { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.62); max-width: 780px; margin-bottom: 26px; }
+.refs__about strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+.refs__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(248px, 1fr)); gap: 12px; }
+.ref-card { display: flex; flex-direction: column; padding: 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; text-decoration: none; color: inherit; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease; }
+a.ref-card:hover { border-color: rgba(159,186,205,0.3); background: rgba(255,255,255,0.05); transform: translateY(-1px); }
+.ref-card__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ref-card__name { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.ref-card__ext { font-size: 13px; color: rgba(255,255,255,0.4); }
+.ref-card__desc { font-size: 12.5px; line-height: 1.45; color: rgba(255,255,255,0.55); margin: 8px 0 14px; flex: 1; }
+.ref-card__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ref-card__tags span { font-size: 10px; font-weight: 600; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 999px; color: var(--brand-blue-light); background: rgba(159,186,205,0.12); border: 1px solid rgba(159,186,205,0.22); }
+.ref-card__links { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.ref-card__links a { font-size: 12px; font-weight: 500; color: var(--brand-blue-light); text-decoration: none; padding: 4px 10px; border: 1px solid rgba(159,186,205,0.28); border-radius: 999px; transition: background 160ms ease, border-color 160ms ease; }
+.ref-card__links a:hover { background: rgba(159,186,205,0.12); border-color: rgba(159,186,205,0.5); }
+
+/* ─── Sticky estimate bar — the total is one tap away from anywhere on the board.
+   Appears once the client starts exploring (not in the first screen — we don't lead with price),
+   hides once the full breakdown is on screen. ─── */
+.estimate-bar {
+  position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(150%); z-index: 95;
+  display: inline-flex; align-items: center; gap: 16px;
+  padding: 10px 11px 10px 20px; border-radius: 999px;
+  background: rgba(12, 20, 28, 0.92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(159, 186, 205, 0.26); box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+  color: var(--white); font-family: inherit; cursor: pointer;
+  opacity: 0; pointer-events: none;
+  transition: opacity 360ms ease, transform 360ms ease;
+}
+.estimate-bar.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+.estimate-bar__main { display: flex; align-items: baseline; gap: 9px; white-space: nowrap; min-width: 0; }
+.estimate-bar__label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255, 255, 255, 0.5); }
+.estimate-bar__total { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: #c3cdff; font-variant-numeric: tabular-nums; }
+.estimate-bar__meta { font-size: 12px; font-weight: 500; color: rgba(255, 255, 255, 0.5); font-variant-numeric: tabular-nums; }
+.estimate-bar__cta { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: rgba(75, 108, 255, 0.18); border: 1px solid rgba(75, 108, 255, 0.42); font-size: 12.5px; font-weight: 600; color: #dbe2ff; }
+.estimate-bar__cta svg { width: 15px; height: 15px; animation: cue-bob-y 1.6s ease-in-out infinite; }
+@keyframes cue-bob-y { 0%, 100% { transform: translateY(-2px); opacity: 0.6; } 50% { transform: translateY(3px); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .estimate-bar__cta svg { animation: none; } }
+
+/* Table can never push the page wide — it scrolls inside its own box if it ever has to */
+.breakdown__scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* ─── Mobile (phone) — keep everything inside the viewport, no horizontal page scroll ─── */
+@media (max-width: 560px) {
+  .wrap { padding-left: 18px; padding-right: 18px; }
+  .board { padding-left: 18px; padding-right: 18px; }
+  .breakdown { padding-left: 18px; padding-right: 18px; }
+
+  /* compact the breakdown so the numbers fit a phone without overflowing */
+  .breakdown__table th, .breakdown__table td { padding: 9px 6px; font-size: 12.5px; }
+  .breakdown__table tr.row-sub td:not(:first-child) { font-size: 15px; }
+  .breakdown__table tr.is-total td { font-size: 12.5px; padding-top: 14px; }
+  .breakdown__table tr.is-total td:not(:first-child) { font-size: 18px; }
+  .breakdown__table tr.is-total .mm { margin-right: 3px; }
+
+  /* full-width estimate bar; lift the preview nav chip above it ONLY while the bar is on screen */
+  .estimate-bar { left: 12px; right: 12px; bottom: 12px; transform: translateY(150%); justify-content: space-between; gap: 10px; padding: 9px 9px 9px 16px; }
+  .estimate-bar.is-visible { transform: translateY(0); }
+  .estimate-bar__meta { display: none; }
+  .service-menu { transition: bottom 300ms ease; }
+  body.bar-shown .service-menu { bottom: 74px; }
+}
+
+/* ─── Split-cost strip — п.15 ТЗ вимагає окремі суми: розробка ↔ переклад ─── */
+.split { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 20px; }
+.split-card { padding: 16px 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
+.split-card__l { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); margin-bottom: 8px; }
+.split-card__v { font-size: 19px; font-weight: 700; color: #c3cdff; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.split-card__d { font-size: 12px; line-height: 1.45; color: rgba(255,255,255,0.45); margin-top: 6px; }
+
+/* Timeline dependency clause under the stages strip */
+.timeline-note { margin-top: 14px; font-size: 12.5px; line-height: 1.55; color: rgba(255,255,255,0.45); }
+.timeline-note strong { color: rgba(255,255,255,0.7); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<script>
+  window.PREVIEW_PROJECT_NAME = "EpiCentral UA";
+  window.PREVIEW_DEFAULT_VERSION = "sitemap";
+
+  window.PREVIEW_VERSIONS = [
+    { id: "launcher",  label: "Дашборд",   desc: "Огляд оцінки",              path: "" },
+    { id: "brief",     label: "Проєкт",    desc: "Завдання та техпідхід",     path: "brief/" },
+    { id: "sitemap",   label: "Оцінка",    desc: "Обсяг робіт і години",      path: "sitemap/" },
+    { id: "questions", label: "Питання",   desc: "Що потрібно від Замовника", path: "questions/" }
+  ];
+</script>
+
+<header class="topbar">
+  <a class="brand" href="../" aria-label="Most of Design — Dashboard">
+    <img src="../assets/mod-logo-on-dark.svg" alt="Most of Design">
+  </a>
+</header>
+
+<div class="wrap">
+  <header class="head">
+    <div class="head__main">
+      <span class="eyebrow">Most of Design · Попередня оцінка</span>
+      <h1 class="page-title">Структура та оцінка</h1>
+    </div>
+    <p class="lede">
+      Локальна українська версія сайту EpiCentral — обсяг робіт за ТЗ.
+      Кожен блок робіт — окрема колонка, всередині складові з годинами на кожній плитці.
+      Переклад текстів і хостинг-ресурси — поза нашою оцінкою (див. блоки праворуч).
+    </p>
+  </header>
+
+  <div class="legend">
+    <span><i class="b-tbc">TBC</i> потребує уточнення</span>
+    <span><i class="b-p2">P2</i> друга фаза (не у стартовій версії)</span>
+    <span><i class="b-sep">SEP</i> окремий блок робіт</span>
+  </div>
+
+  <div class="board-hint">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M8 7 4 11l4 4M16 7l4 4-4 4M3 11h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Гортайте або тягніть, щоб побачити всі блоки
+  </div>
+</div>
+
+<!-- SITEMAP first -->
+<div class="board" id="board"></div>
+
+<!-- Sticky estimate bar — total is one tap away from anywhere; appears once exploring starts, hides at the breakdown -->
+<button class="estimate-bar" id="estimateBar" type="button" aria-label="Jump to the full estimate breakdown">
+  <span class="estimate-bar__main">
+    <span class="estimate-bar__label">Оцінка</span>
+    <span class="estimate-bar__total" id="estimateBarTotal">—</span>
+    <span class="estimate-bar__meta" id="estimateBarMeta"></span>
+  </span>
+  <span class="estimate-bar__cta">
+    Деталі
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </span>
+</button>
+
+<!-- ESTIMATE after — see the work before the price -->
+<div class="wrap estimate">
+  <h2 class="estimate__title">Попередня оцінка</h2>
+
+  <div class="rollup" id="rollup"></div>
+
+  <div class="breakdown__scroll">
+    <table class="breakdown__table">
+      <thead><tr><th>Позиція</th><th>Мін</th><th>Макс</th></tr></thead>
+      <tbody id="breakdownBody"></tbody>
+    </table>
+  </div>
+
+  <!-- п.15 ТЗ: окрема оцінка розробки ↔ окрема оцінка перекладу -->
+  <div class="split" id="splitCards"></div>
+</div>
+
+<!-- Stages -->
+<div class="wrap stages-wrap">
+  <h2 class="estimate__title">Етапи та строки</h2>
+  <div class="stages">
+    <div class="stage-card">
+      <span class="stage-card__n">Етап 0 <span class="stage-card__pay">100% передоплата</span></span>
+      <div class="stage-card__t">Технічний аудит · ≈1 тиждень</div>
+      <div class="stage-card__d">Розбір переданого пакета вихідного коду, інвентаризація контенту, технічна пропозиція. Після цього етапу оцінка нижче фіксується у тверду суму.</div>
+    </div>
+    <div class="stage-card">
+      <span class="stage-card__n">Етап 1 <span class="stage-card__pay">40% решти</span></span>
+      <div class="stage-card__t">Інфраструктура · ≈1.5–2 тижні</div>
+      <div class="stage-card__d">Розгортання Drupal-середовища на хостингу Замовника, домен, HTTPS, staging + production, процедура деплою та бекапів.</div>
+    </div>
+    <div class="stage-card">
+      <span class="stage-card__n">Етап 2 <span class="stage-card__pay">30% решти</span></span>
+      <div class="stage-card__t">Структура та сторінки · ≈2–3 тижні</div>
+      <div class="stage-card__d">Активні розділи HOME, ABOUT, Epifundamentals, Congress highlights. Приховування визначених елементів, матеріалів, відео та розділів без видалення.</div>
+    </div>
+    <div class="stage-card">
+      <span class="stage-card__n">Етап 3 <span class="stage-card__pay">20% решти</span></span>
+      <div class="stage-card__t">Українська версія · ≈2–2.5 тижні</div>
+      <div class="stage-card__d">Мовний шар CMS, внесення наданих українських текстів, перевірка їх коректного відображення у верстці на всіх розмірах екрана.</div>
+    </div>
+    <div class="stage-card">
+      <span class="stage-card__n">Етап 4 <span class="stage-card__pay">10% — приймання</span></span>
+      <div class="stage-card__t">Тестування та передача · ≈1–1.5 тижня</div>
+      <div class="stage-card__d">Функціональне тестування, адаптив, браузери, звіт про перевірки, документація та передача адмінпанелі команді Замовника.</div>
+    </div>
+  </div>
+  <p class="timeline-note">
+    <strong>Загальний строк — 7–10 тижнів</strong> за умови вчасного надання матеріалів: пакета вихідного коду, українських текстів, адаптованих відео, доступів до хостингу та аналітики.
+    Затримка матеріалів, додаткові раунди погоджень (медичне / юридичне / брендове) та розширення обсягу зсувають строк відповідно.
+    Етапи 1–3 частково йдуть паралельно.
+  </p>
+</div>
+
+<!-- Preliminary disclaimer — very bottom of the page -->
+<div class="wrap">
+  <div class="notice notice--foot">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.3 3.86 1.82 18a2 2 0 0 0 1.7 3h16.96a2 2 0 0 0 1.7-3L13.7 3.86a2 2 0 0 0-3.42 0Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span><strong>Оцінка попередня.</strong> Станом на сьогодні ми не бачили пакета вихідного коду — оцінка побудована на ТЗ та на технічному аналізі публічної версії сайту. Вилка «мін–макс» відображає складність блоків і фіксується у тверду суму після Етапу 0 (технічного аудиту).
+    <strong>Не входить у суму:</strong> переклад та копірайт українських текстів (виконує Замовник / агентство), вартість хостингу та сторонніх сервісів (оплачує Замовник зі свого акаунта), виробництво та адаптація відео, медичне і юридичне погодження контенту, підтримка після запуску (за окремою угодою).
+    Включено до 2 раундів правок на етап; додаткові роботи поза узгодженим обсягом — погодинно.</span>
+  </div>
+</div>
+<!-- References / About — studio credibility closer (same for every offer) -->
+<div class="wrap refs">
+  <h2 class="estimate__title">Приклади робіт</h2>
+  <p class="refs__about">
+    <strong>Most of Design — продуктовий дизайнер, 25+ років досвіду.</strong> Повний спектр дизайну та візуалізації — від ідеї до реалізації. 3D- та 2D-анімація, дизайн взаємодії, презентації, розвиток бренду. Сертифікований спеціаліст Autodesk.
+  </p>
+  <div class="refs__grid">
+
+    <a class="ref-card" href="https://tabasco.com.ua/" target="_blank" rel="noopener">
+      <div class="ref-card__head"><span class="ref-card__name">Tabasco</span><span class="ref-card__ext">↗</span></div>
+      <div class="ref-card__desc">Дизайн і реалізація «під ключ».</div>
+      <div class="ref-card__tags"><span>Дизайн</span><span>Реалізація під ключ</span></div>
+    </a>
+
+    <a class="ref-card" href="https://adapwork.com/" target="_blank" rel="noopener">
+      <div class="ref-card__head"><span class="ref-card__name">Adapwork</span><span class="ref-card__ext">↗</span></div>
+      <div class="ref-card__desc">CAD із заводу → точна 3D-анімація за реальними моделями. Рендер і постпродакшн (не генерації).</div>
+      <div class="ref-card__tags"><span>Продуктовий дизайн</span><span>3D-анімація</span><span>Рендер + пост</span></div>
+    </a>
+
+    <a class="ref-card" href="https://chife-mod.github.io/verifly-web/concept-2/" target="_blank" rel="noopener">
+      <div class="ref-card__head"><span class="ref-card__name">Verifly · Концепт 2</span><span class="ref-card__ext">↗</span></div>
+      <div class="ref-card__desc">Концепція сайту + інтерактивні прототипи для розробників.</div>
+      <div class="ref-card__tags"><span>Веб-концепція</span><span>Інтерактивні прототипи</span></div>
+    </a>
+
+    <a class="ref-card" href="https://chife-mod.github.io/verifly-web/concept-1/" target="_blank" rel="noopener">
+      <div class="ref-card__head"><span class="ref-card__name">Verifly · Концепт 1</span><span class="ref-card__ext">↗</span></div>
+      <div class="ref-card__desc">Концепція сайту + інтерактивні прототипи для розробників.</div>
+      <div class="ref-card__tags"><span>Веб-концепція</span><span>Інтерактивні прототипи</span></div>
+    </a>
+
+  </div>
+</div>
+<div class="footer-pad"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   SINGLE SOURCE OF TRUTH — edit this from the client brief.
+   Page = { name, sections:[ {name, desc?, min, max, tbc?, p2?, sep?} ],
+            children?:[ { name, kind:"subpage"|"popup", ...page } ],
+            system?:true, p2?:true }
+   Flags: tbc = requires clarification · p2 = phase 2 (— in START col) ·
+          sep = separate work block. Hours are in HOURS (min/max).
+   ─────────────────────────────────────────────────────────────── */
+/* ── Подвид оффера (переключай при бутстрапе проекта) ──────────────
+   subtype : "range" (плюс-минус, min–max)  |  "fixed" (фікс — одна цена)
+   currency: "USD"                            |  "UAH" (+ строка ₴ по курсу НБУ)
+   fop     : 0 (выкл)                          |  0.06 (ФОП 6% — UA-договор)
+   В fixed-подвиде блок несёт `fix:` (USD-цена блока) в SITEMAP.
+   finalUSD: задай число, чтобы зафиксировать утверждённый Total (перебивает расчёт). */
+const CONFIG = {
+  rate: 35,                  // Drupal + DevOps + CMS-робота (не дизайн-лендинг). Клієнту НЕ показуємо.
+  subtype: "range",          // "range" | "fixed"
+  currency: "UAH",           // "USD" | "UAH"
+  uahRate: 44.8568, uahDate: "28.07.2026",   // курс НБУ, фіксується на дату договору
+  fop: 0.06,                 // ФОП 3 гр.: 5% ЄП + 1% військовий збір
+  finalUSD: null,            // null = считаем; число = утверждённый фикс-Total
+  commentsMin: 0.10, commentsMax: 0.10, mgmtMin: 0.10, mgmtMax: 0.10, hoursPerDay: 6,
+};
+
+/* Client-facing rollup figures — что покупает клиент (НЕ внутренние блоки/плитки). */
+const PROJECT_META = { sectionsActive: 4, pages: 10 };
+const TIMELINE_WEEKS = "7–10";
+
+const SITEMAP = [
+  { name: "Технічний аудит", work: true, tag: "Аудит",
+    caption: "<strong>Етап 0.</strong> Виконується першим — після нього оцінка фіксується у тверду суму.",
+    sections: [
+      { name: "Аудит вихідного коду", desc: "Розбір переданого пакета: версія ядра, кастомна тема, кастомні та contrib-модулі, залежності, патчі, що з цього переноситься у локальну версію.", min: 6, max: 9 },
+      { name: "Інвентаризація контенту", desc: "Перелік сторінок, матеріалів, медіа та відео: що лишається активним, що ховаємо, що потребує українського тексту.", min: 4, max: 6, tbc: true },
+      { name: "Технічна пропозиція", desc: "Архітектура розгортання, вимоги до хостингу, перелік залежностей, ризики та припущення (п.15 ТЗ).", min: 3, max: 5 },
+  ]},
+
+  { name: "Інфраструктура", work: true, tag: "DevOps",
+    caption: "Розгортання на хостингу Замовника. <strong>Вартість самих ресурсів оплачує Замовник.</strong>",
+    sections: [
+      { name: "Середовище хостингу", desc: "Обчислювальний інстанс, база даних, сховище медіафайлів, мережа та доступи під CMS-стек.", min: 7, max: 10 },
+      { name: "Стек CMS", desc: "PHP, менеджер залежностей, консольні утиліти, cron, кешування, права доступу, налаштування під продакшн.", min: 5, max: 7 },
+      { name: "Домен, HTTPS, SSL", desc: "Підключення домену Замовника, SSL-сертифікат, редиректи, закриття сайту від індексації пошуковими системами (п.10 ТЗ).", min: 2.5, max: 4 },
+      { name: "Staging + production", desc: "Два середовища, процедура деплою та резервного копіювання.", min: 4, max: 6 },
+  ]},
+
+  { name: "HOME", tag: "Сторінка",
+    caption: "Активний розділ стартової версії.",
+    sections: [
+      { name: "Перенос сторінки", desc: "Збірка сторінки локальної версії на основі відповідної сторінки глобального сайту.", min: 3, max: 4.5 },
+      { name: "Приховати Register / Sign in", desc: "Елементи прибираються з інтерфейсу без видалення з коду — з можливістю подальшої активації.", min: 1, max: 1.5 },
+      { name: "Приховати напрям Upper GI", desc: "Елемент і всі повʼязані з ним переходи в навігації та блоках.", min: 1.5, max: 2.5 },
+      { name: "Блок 6 фото з цитатами", desc: "Нижня частина сторінки: 6 фото з цитатами, що зʼявляються при наведенні.", min: 2, max: 3 },
+      { name: "Хедер, навігація, футер", desc: "Локальні правки меню відповідно до активних розділів, юридичні блоки футера.", min: 2.5, max: 3.5 },
+  ]},
+
+  { name: "ABOUT", tag: "Сторінка",
+    caption: "Активний розділ стартової версії.",
+    sections: [
+      { name: "Meet the Epicriators — 7 профілів", desc: "Лишаються Boulet, Brightling, Pavord, Rosberg, Marone, Levy, Gauvreau — з цитатами та регаліями.", min: 3, max: 4.5 },
+      { name: "Приховати View biography", desc: "Переходи на сторінки біографій прибираються або ховаються.", min: 1.5, max: 2 },
+      { name: "Why focus on the epithelium", desc: "Розділ лишається у стартовій версії.", min: 2, max: 3 },
+      { name: "Синхронізація з HOME", desc: "Повторювані блоки успадковують ті самі приховування, що й на головній.", min: 1.5, max: 2.5 },
+  ]},
+
+  { name: "Epifundamentals", tag: "Розділ",
+    caption: "Активний розділ. Обсяг матеріалів уточнюється на Етапі 0.",
+    sections: [
+      { name: "Структура та лістинг", desc: "Розділ зберігається у стартовій версії з усіма матеріалами, крім двох прихованих.", min: 3, max: 4.5 },
+      { name: "Приховати 2 матеріали", desc: "«The role of the epithelium and epithelial cytokines in COPD» та «The role of the epithelium in EoE» — ховаємо, зі структури не видаляємо.", min: 2, max: 3 },
+      { name: "Матеріали розділу", desc: "Перенос і перевірка матеріалів. Точна кількість — після інвентаризації на Етапі 0.", min: 6, max: 9.5, tbc: true },
+  ]},
+
+  { name: "Congress highlights", tag: "Розділ",
+    caption: "Активний розділ. Матеріали конгресу лишаються англійською.",
+    sections: [
+      { name: "Вступний блок", desc: "Єдина частина розділу, що перекладається українською (п.8 ТЗ).", min: 1.5, max: 2 },
+      { name: "Інфографіки та презентації", desc: "Лишаються англійською. Перевірка коректної роботи повноекранного режиму перегляду.", min: 2.5, max: 4.5 },
+      { name: "Приховати відео", desc: "Відео з конгресу, а також повʼязані з ними кнопки, посилання та інтерактивні елементи.", min: 2.5, max: 3.5 },
+  ]},
+
+  { name: "Приховані розділи", work: true, tag: "Структура",
+    caption: "Лишаються у структурі — відкриваються в майбутньому без повторної розробки.",
+    sections: [
+      { name: "Publications · Scientific library", desc: "Обидва розділи зберігаються у структурі сайту, але приховані від користувачів, з можливістю відкриття надалі.", min: 4, max: 6 },
+      { name: "HCP-гейт і вибір країни", desc: "Перевірка статусу медпрацівника та країнний селектор глобальної версії вимикаються згідно з п.10 ТЗ — без видалення з коду.", min: 3, max: 4 },
+  ]},
+
+  { name: "Українська версія", work: true, tag: "Локалізація",
+    caption: "<strong>Готові тексти надає Замовник.</strong> Ми відповідаємо за їх коректне внесення та відображення.",
+    sections: [
+      { name: "Мовний шар CMS", desc: "Українська локаль, переклад інтерфейсних елементів системи, налаштування мовних полів.", min: 4, max: 6 },
+      { name: "Внесення текстів", desc: "Наповнення сторінок і матеріалів наданими українськими текстами через адмінпанель.", min: 8, max: 12 },
+      { name: "Перевірка у верстці", desc: "Контроль відображення українського тексту: відсутність обрізання, накладання, некоректних переносів і зсувів блоків.", min: 4, max: 6 },
+      { name: "Перелік матеріалів", desc: "Зведений перелік локалізованих матеріалів для перевірки та погодження Замовником (п.9 ТЗ).", min: 1.5, max: 2 },
+  ]},
+
+  { name: "Аналітика та compliance", work: true, tag: "Compliance", sections: [
+      { name: "GA та корпоративний Adobe tag", desc: "Підключення та налаштування лічильників на властивостях Замовника (п.11 ТЗ).", min: 4, max: 6 },
+      { name: "Cookie-банер", desc: "Повідомлення про cookie та тексти щодо обробки даних. Ліцензія на сторонню панель згоди — за Замовником.", min: 3, max: 4.5 },
+      { name: "Юридичні сторінки", desc: "Місця під політику конфіденційності, умови використання, юридичні повідомлення та медичні дисклеймери.", min: 2, max: 3 },
+      { name: "Закриття від індексації", desc: "Сайт не індексується пошуковими системами — за вимогою п.10 ТЗ.", min: 1, max: 1.5 },
+  ]},
+
+  { name: "Відео та медіа", work: true, tag: "Медіа", sections: [
+      { name: "Слоти під відео", desc: "Підготовка місць під адаптовані відео та їх заміна після передачі матеріалів Замовником.", min: 3, max: 5, tbc: true },
+  ]},
+
+  { name: "Адаптив і браузери", work: true, tag: "Мобайл", sections: [
+      { name: "Desktop · tablet · mobile", desc: "Перевірка та виправлення відображення на всіх розмірах екрана після внесення українських текстів.", min: 6, max: 9.5 },
+      { name: "Chrome · Edge · Safari · Firefox", desc: "Коректна робота у сучасних версіях основних браузерів (п.11 ТЗ).", min: 3, max: 4.5 },
+  ]},
+
+  { name: "Швидкість", work: true, tag: "Performance", sections: [
+      { name: "Базова оптимізація", desc: "Швидкість завантаження сторінок і медіафайлів: кешування, оптимізація зображень, віддача статики.", min: 3, max: 5 },
+  ]},
+
+  { name: "Тестування", work: true, tag: "QA", sections: [
+      { name: "Функціональне тестування", desc: "Усі активні сторінки та розділи: навігація, меню, кнопки, hover-ефекти, мультимедійні блоки.", min: 4, max: 5.5 },
+      { name: "Перевірка приховувань", desc: "Контроль, що всі визначені елементи, сторінки, матеріали та відео недоступні користувачу — і при цьому лишились у структурі.", min: 2, max: 3 },
+      { name: "Перевірка локалізації", desc: "Коректність українського тексту у верстці на всіх розмірах екрана.", min: 2.5, max: 4 },
+      { name: "Звіт про тестування", desc: "Перелік виконаних перевірок для приймання робіт (п.13–14 ТЗ).", min: 1.5, max: 2 },
+  ]},
+
+  { name: "Передача", work: true, tag: "Handover",
+    caption: "<strong>Передаємо Замовнику:</strong> робочий сайт, доступи до адмінпанелі, документацію.",
+    sections: [
+      { name: "Адмінпанель і ролі", desc: "Налаштування ролей редакторів Замовника для самостійного оновлення контенту (п.16 ТЗ).", min: 2, max: 3 },
+      { name: "Технічна документація", desc: "Структура сайту, спосіб оновлення контенту, процедура розгортання (п.11 ТЗ).", min: 4, max: 5.5 },
+      { name: "Навчання команди", desc: "Онлайн-сесія для редакторів Замовника: як оновлювати контент і відкривати приховані розділи.", min: 2, max: 3 },
+  ]},
+
+  /* ── Показуємо у структурі, але НЕ рахуємо в суму ─────────────── */
+
+  { name: "Переклад та копірайт", work: true, tag: "Замовник", excluded: true,
+    caption: "Виконує Замовник / агентство. Ми приймаємо готові українські тексти у роботу.",
+    sections: [
+      { name: "Переклад і адаптація текстів", desc: "Адаптований (не дослівний) переклад для професійної медичної аудиторії з дотриманням термінологічної точності.", min: 16, max: 24 },
+      { name: "Мовна вичитка", desc: "Вичитка, перевірка узгодженості термінів, медичне погодження формулювань.", min: 6, max: 9 },
+  ]},
+
+  { name: "Підтримка", work: true, tag: "Окремо", excluded: true,
+    caption: "Після запуску — за окремою угодою: погодинно або місячний пакет годин.",
+    sections: [
+      { name: "Супровід після запуску", desc: "Оновлення контенту, дрібні доробки, оновлення безпеки CMS. Орієнтовний місячний обсяг.", min: 4, max: 10 },
+  ]},
+];
+
+/* ─── Helpers ────────────────────────────────────────────────── */
+const fmtH = (n) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+/* Групування тисяч — нерозривний пробіл (українська типографіка), не кома */
+const grp = (n) => Math.round(n).toLocaleString("en-US").replace(/,/g, " ");
+const fmtUSD = (n) => "$" + grp(n);
+const fmtUSDRange = (a, b) => "$" + grp(a) + "–" + grp(b);
+const fmtUAH = (n) => Math.round(n).toLocaleString("uk-UA").replace(/ /g, " ") + " ₴";
+const sumSecs = (secs) => secs.reduce((a, s) => [a[0] + s.min, a[1] + s.max], [0, 0]);
+const isFix = () => CONFIG.subtype === "fixed";
+const isUAH = () => CONFIG.currency === "UAH";
+
+let grandMin = 0, grandMax = 0, sectionCount = 0, pageCount = 0;
+const blocks = [];   // per-column rows for the breakdown table
+
+function badges(s) {
+  let h = "";
+  if (s.tbc) h += `<i class="b-tbc">TBC</i>`;
+  if (s.p2)  h += `<i class="b-p2">P2</i>`;
+  if (s.sep) h += `<i class="b-sep">SEP</i>`;
+  return h ? `<span class="tile__badges">${h}</span>` : "";
+}
+
+function tilesHTML(sections) {
+  return sections.map((s) => `
+    <div class="tile">
+      <div class="tile__row">
+        <span class="tile__name">${s.name}${badges(s)}</span>
+        <span class="tile__hours">${fmtH(s.min)}–${fmtH(s.max)}&nbsp;<small>год</small></span>
+      </div>
+      ${s.desc ? `<div class="tile__desc">${s.desc}</div>` : ""}
+    </div>`).join("");
+}
+
+const KIND_LABEL = { subpage: "Підсторінка", popup: "Спливне вікно", system: "Системне", work: "Блок робіт" };
+
+function nodeHTML({ num, kind, tag, name, sections, cls, p2, excluded, caption }) {
+  const [mn, mx] = sumSecs(sections);
+  const fixSum = sections.reduce((a, s) => a + (s.fix || 0), 0);   // Σ fixed block prices (fixed subtype)
+  if (!excluded) { grandMin += mn; grandMax += mx; sectionCount += sections.length; blocks.push({ name, mn, mx, fix: fixSum || null }); }
+  const bd = [];
+  // tag badge on EVERY column (plain pages → --tag class; kinds carry their own label)
+  if (kind || tag) bd.push(`<span class="node__badge node__badge--${kind || "tag"}">${tag || KIND_LABEL[kind] || kind}</span>`);
+  if (p2)   bd.push(`<span class="node__badge node__badge--p2">Фаза 2</span>`);
+  if (excluded) bd.push(`<span class="node__badge node__badge--excl">Не входить у суму</span>`);
+  // price under hours on every billable column; excluded shows hours only (no price)
+  const sub = excluded
+    ? `<span class="node__sub-wrap"><span class="node__sub node__sub--excl">${fmtH(mn)}–${fmtH(mx)} год</span></span>`
+    : `<span class="node__sub-wrap"><span class="node__sub">${fmtH(mn)}–${fmtH(mx)} год</span><span class="node__price">${isFix() && fixSum > 0 ? fmtUSD(fixSum) : fmtUSDRange(mn * CONFIG.rate, mx * CONFIG.rate)}</span></span>`;
+  return `
+    <div class="node ${cls || ""}${excluded ? " is-excluded" : ""}">
+      <div class="node__head">
+        <div class="node__headtop">
+          ${num ? `<span class="node__num">${num}</span>` : ""}
+          <span class="node__name" title="${name}">${name}</span>
+          ${sub}
+        </div>
+        ${bd.length ? `<div class="node__badges">${bd.join("")}</div>` : ""}
+      </div>
+      ${caption ? `<div class="node__caption">${caption}</div>` : ""}
+      <div class="node__sections">${tilesHTML(sections)}</div>
+    </div>`;
+}
+
+/* ─── Pre-pass: fill computed sections (Adaptive = pct of all else) ─ */
+let baseMin = 0, baseMax = 0;
+SITEMAP.forEach((p) => {
+  if (p.excluded) return;   // excluded columns don't feed the estimate or the 30% adaptive base
+  [...p.sections, ...((p.children || []).flatMap((c) => c.sections))]
+    .forEach((s) => { if (!s.computed) { baseMin += s.min; baseMax += s.max; } });
+});
+SITEMAP.forEach((p) => {
+  [...p.sections, ...((p.children || []).flatMap((c) => c.sections))]
+    .forEach((s) => { if (s.computed) { s.min = Math.round(baseMin * s.pctMin * 2) / 2; s.max = Math.round(baseMax * s.pctMax * 2) / 2; } });
+});
+
+/* ─── Render board ───────────────────────────────────────────── */
+const board = document.getElementById("board");
+let pageIndex = 0;
+SITEMAP.forEach((page) => {
+  pageCount += 1;
+  let nodeArgs;
+  if (page.work) {
+    nodeArgs = { kind: "work", tag: page.tag, name: page.name, sections: page.sections, cls: "is-work", p2: page.p2, excluded: page.excluded, caption: page.caption };
+  } else if (page.system) {
+    nodeArgs = { kind: "system", name: page.name, sections: page.sections, cls: "is-system", p2: page.p2, caption: page.caption };
+  } else {
+    pageIndex += 1;
+    nodeArgs = { num: String(pageIndex).padStart(2, "0"), name: page.name, tag: page.tag || "Page", sections: page.sections, p2: page.p2, excluded: page.excluded, caption: page.caption };
+  }
+
+  let col = `<div class="column">`;
+  col += nodeHTML(nodeArgs);
+  (page.children || []).forEach((child) => {
+    pageCount += 1;
+    col += `<div class="connector${child.kind === "popup" ? " connector--popup" : ""}"></div>`;
+    col += nodeHTML({ kind: child.kind, name: child.name, sections: child.sections, cls: "is-child", p2: child.p2, caption: child.caption });
+  });
+  col += `</div>`;
+  board.insertAdjacentHTML("beforeend", col);
+});
+
+/* ─── Drag-to-pan horizontal scroll (grab & drag the board) ──── */
+(() => {
+  let down = false, startX = 0, startScroll = 0, moved = 0;
+  board.addEventListener("pointerdown", (e) => {
+    // ignore drags that start on links/buttons
+    if (e.target.closest("a, button")) return;
+    down = true; moved = 0;
+    startX = e.clientX; startScroll = board.scrollLeft;
+    board.setPointerCapture(e.pointerId);
+    board.style.cursor = "grabbing";
+    board.style.userSelect = "none";
+  });
+  board.addEventListener("pointermove", (e) => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    moved = Math.max(moved, Math.abs(dx));
+    board.scrollLeft = startScroll - dx;
+  });
+  const end = () => { down = false; board.style.cursor = ""; board.style.userSelect = ""; };
+  board.addEventListener("pointerup", end);
+  board.addEventListener("pointercancel", end);
+  // suppress click after a real drag (so cards don't fire)
+  board.addEventListener("click", (e) => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+})();
+
+/* ─── Totals — subtype-aware (range|fixed · USD|UAH · optional ФОП) ─── */
+const R = CONFIG.rate, FOP = CONFIG.fop || 0;
+const fixSubtotal = blocks.reduce((a, b) => a + (b.fix || 0), 0);     // Σ fixed block prices
+
+const subMin = isFix() ? fixSubtotal : grandMin * R;
+const subMax = isFix() ? fixSubtotal : grandMax * R;
+const commMin = subMin * CONFIG.commentsMin, commMax = subMax * CONFIG.commentsMax;
+const mgmtMin = subMin * CONFIG.mgmtMin,     mgmtMax = subMax * CONFIG.mgmtMax;
+const preMin = subMin + commMin + mgmtMin,   preMax = subMax + commMax + mgmtMax;
+const fopMin = preMin * FOP,                 fopMax = preMax * FOP;
+let totMin = preMin + fopMin,                totMax = preMax + fopMax;
+if (CONFIG.finalUSD != null) { totMin = totMax = CONFIG.finalUSD; }  // approved fixed price overrides
+const daysMin = Math.ceil(grandMin / CONFIG.hoursPerDay);
+const daysMax = Math.ceil(grandMax / CONFIG.hoursPerDay);
+const uah = (usd) => usd * CONFIG.uahRate;
+
+// rollup — клієнтська форма деливераблу + Разом $ / ₴
+let rollupHTML = `
+  <div class="stat"><div class="stat__label">Активних розділів</div><div class="stat__value">${PROJECT_META.sectionsActive}</div></div>
+  <div class="stat"><div class="stat__label">Сторінок</div><div class="stat__value">${PROJECT_META.pages}</div></div>
+  <div class="stat"><div class="stat__label">Годин</div><div class="stat__value">${fmtH(grandMin)}–${fmtH(grandMax)}</div></div>
+  <div class="stat"><div class="stat__label">Строк</div><div class="stat__value">${TIMELINE_WEEKS} <small>тижнів</small></div></div>
+  <div class="stat stat--accent"><div class="stat__label">Разом, $${FOP ? " · з ФОП" : ""}</div><div class="stat__value">${isFix() ? fmtUSD(totMax) : `${fmtUSD(totMin)}–<small>${fmtUSD(totMax)}</small>`}</div></div>`;
+if (isUAH()) rollupHTML += `<div class="stat stat--accent"><div class="stat__label">Разом, ₴</div><div class="stat__value">${isFix() ? fmtUAH(uah(totMax)) : `${Math.round(uah(totMin)).toLocaleString("uk-UA")}–<small>${fmtUAH(uah(totMax))}</small>`}</div></div>`;
+document.getElementById("rollup").innerHTML = rollupHTML;
+
+// sticky estimate bar — same headline figure (currency-aware)
+const barTotal = document.getElementById("estimateBarTotal");
+const barMeta = document.getElementById("estimateBarMeta");
+if (barTotal) barTotal.textContent = isUAH()
+  ? (isFix() ? fmtUAH(uah(totMax)) : `${Math.round(uah(totMin)).toLocaleString("uk-UA")}–${fmtUAH(uah(totMax))}`)
+  : (isFix() ? fmtUSD(totMax) : `${fmtUSD(totMin)}–${fmtUSD(totMax)}`);
+if (barMeta) barMeta.textContent = `· ${TIMELINE_WEEKS} тижнів`;
+
+// breakdown — dynamic header (single Price col for fixed, Min/Max for range)
+const thead = document.querySelector(".breakdown__table thead tr");
+if (thead) thead.innerHTML = isFix() ? `<th>Позиція</th><th>Сума</th>` : `<th>Позиція</th><th>Мін</th><th>Макс</th>`;
+const cell2 = (a, b) => isFix() ? `<td>${fmtUSD(b)}</td>` : `<td>${fmtUSD(a)}</td><td>${fmtUSD(b)}</td>`;
+const pctLabel = (a, b) => (a === b ? `${a * 100}%` : `${a * 100}–${b * 100}%`);
+
+const blockRows = blocks.map((b) => {
+  const a = isFix() && b.fix != null ? b.fix : b.mn * R;
+  const z = isFix() && b.fix != null ? b.fix : b.mx * R;
+  return `<tr><td>${b.name} (${fmtH(b.mn)}–${fmtH(b.mx)} год)</td>${cell2(a, z)}</tr>`;
+}).join("");
+
+let rows = `
+  ${blockRows}
+  <tr class="row-sub"><td>Субтотал — робота${isFix() ? "" : ` (${fmtH(grandMin)}–${fmtH(grandMax)} год)`}</td>${cell2(subMin, subMax)}</tr>
+  <tr><td>Коментарі та незаплановані роботи (${pctLabel(CONFIG.commentsMin, CONFIG.commentsMax)})</td>${cell2(commMin, commMax)}</tr>
+  <tr><td>Менеджмент та комунікація (${pctLabel(CONFIG.mgmtMin, CONFIG.mgmtMax)})</td>${cell2(mgmtMin, mgmtMax)}</tr>`;
+if (FOP) rows += `<tr><td>ФОП — єдиний податок (${Math.round(FOP * 100)}%)</td>${cell2(fopMin, fopMax)}</tr>`;
+rows += isFix()
+  ? `<tr class="is-total"><td>Разом, $${FOP ? " · з ФОП" : ""} · фікс</td><td>${fmtUSD(totMax)}</td></tr>`
+  : `<tr class="is-total"><td>Разом, $${FOP ? " · з ФОП" : ""}</td><td><small class="mm">мін</small> ${fmtUSD(totMin)}</td><td><small class="mm">макс</small> ${fmtUSD(totMax)}</td></tr>`;
+if (isUAH()) {
+  rows += isFix()
+    ? `<tr class="rate-row"><td>Курс НБУ · ${CONFIG.uahDate}</td><td>${Number(CONFIG.uahRate).toFixed(2)} ₴/$</td></tr>
+       <tr class="is-total"><td>Разом, ₴</td><td>${fmtUAH(uah(totMax))}</td></tr>`
+    : `<tr class="rate-row"><td>Курс НБУ · ${CONFIG.uahDate}</td><td></td><td>${Number(CONFIG.uahRate).toFixed(2)} ₴/$</td></tr>
+       <tr class="is-total"><td>Разом, ₴</td><td>${Math.round(uah(totMin)).toLocaleString("uk-UA")}</td><td>${fmtUAH(uah(totMax))}</td></tr>`;
+}
+document.getElementById("breakdownBody").innerHTML = rows;
+
+/* ─── п.15 ТЗ — окремі оцінки: розробка/адаптація ↔ переклад/локалізація ─── */
+(() => {
+  const el = document.getElementById("splitCards");
+  if (!el) return;
+  el.innerHTML = `
+    <div class="split-card">
+      <div class="split-card__l">Розробка та адаптація сайту</div>
+      <div class="split-card__v">${fmtUSD(totMin)} – ${fmtUSD(totMax)}</div>
+      <div class="split-card__d">Повний обсяг наших робіт за цією оцінкою, з ФОП. Гривневий еквівалент — за курсом НБУ на дату договору.</div>
+    </div>
+    <div class="split-card">
+      <div class="split-card__l">Переклад та локалізація текстів</div>
+      <div class="split-card__v">Не входить</div>
+      <div class="split-card__d">Переклад, адаптацію та медичну вичитку виконує Замовник / агентство. Ми приймаємо готові українські тексти й відповідаємо за їх коректне внесення та відображення на сайті.</div>
+    </div>
+    <div class="split-card">
+      <div class="split-card__l">Хостинг та сторонні сервіси</div>
+      <div class="split-card__v">Оплачує Замовник</div>
+      <div class="split-card__d">Ресурси хостингу, домен, ліцензії сторонніх сервісів (панель згоди на cookie тощо) — на акаунтах і за рахунок Замовника. Ми виконуємо налаштування.</div>
+    </div>`;
+})();
+
+/* ─── Drift guard — shared/figures.js має збігатися з розрахунком цієї сторінки ─── */
+(() => {
+  const f = window.MOD_FIGURES;
+  if (!f) return;
+  const mism = [];
+  if (f.hoursMin !== grandMin) mism.push(`hoursMin ${f.hoursMin} ≠ ${grandMin}`);
+  if (f.hoursMax !== grandMax) mism.push(`hoursMax ${f.hoursMax} ≠ ${grandMax}`);
+  if (f.totalMin !== Math.round(totMin)) mism.push(`totalMin ${f.totalMin} ≠ ${Math.round(totMin)}`);
+  if (f.totalMax !== Math.round(totMax)) mism.push(`totalMax ${f.totalMax} ≠ ${Math.round(totMax)}`);
+  if (mism.length) console.warn("[MOD] shared/figures.js розійшовся з розрахунком:", mism.join(" · "));
+  else console.info("[MOD] figures.js ✓ збігається з розрахунком");
+})();
+
+/* ─── Sticky estimate bar — appears once the client starts exploring, hides at the breakdown.
+   Tap = jump straight to the full estimate (offset for the sticky topbar). Toggles (not hide-once)
+   so the total stays reachable whenever you're back up in the board.
+   Uses scroll + getBoundingClientRect (NOT IntersectionObserver — headless preview never fires IO). ─── */
+(() => {
+  const bar = document.getElementById("estimateBar");
+  const summary = document.querySelector(".estimate");
+  if (!bar || !summary) return;
+  bar.addEventListener("click", () => {
+    const y = summary.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0) - 72;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  });
+  const update = () => {
+    const vh = window.innerHeight || document.documentElement.clientHeight || 700;
+    const atSummary = summary.getBoundingClientRect().top <= vh * 0.85;   // breakdown is on screen
+    const engaged = (window.scrollY || window.pageYOffset || 0) > 140;     // past the first screen
+    const show = engaged && !atSummary;
+    bar.classList.toggle("is-visible", show);
+    document.body.classList.toggle("bar-shown", show);   // lift the preview nav chip clear of the bar
+  };
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update, { passive: true });
+  update();
+})();
+</script>
+
+<script defer src="../shared/service-menu.js"></script>
+</body>
+</html>
