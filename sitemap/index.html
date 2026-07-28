@@ -444,28 +444,22 @@ a.ref-card:hover { border-color: rgba(159,186,205,0.3); background: rgba(255,255
   </p>
   <div class="refs__grid">
 
+    <a class="ref-card" href="https://reply-anywhere.semanticforce.workers.dev/" target="_blank" rel="noopener">
+      <div class="ref-card__head"><span class="ref-card__name">Reply Anywhere</span><span class="ref-card__ext">↗</span></div>
+      <div class="ref-card__desc">Лендинг SaaS-продукту SemanticForce — єдина скринька для відгуків і повідомлень із 40+ каналів. Серед клієнтів продукту — Ajax Systems і Samsung.</div>
+      <div class="ref-card__tags"><span>Продуктовий лендинг</span><span>Дизайн + верстка</span><span>Деплой</span></div>
+    </a>
+
+    <a class="ref-card" href="https://chife-mod.github.io/verifly-web/production-preview/" target="_blank" rel="noopener">
+      <div class="ref-card__head"><span class="ref-card__name">Verifly</span><span class="ref-card__ext">↗</span></div>
+      <div class="ref-card__desc">Закрита мережа угод з нерухомістю в Дубаї. Концепція сайту, доведена до продакшн-версії.</div>
+      <div class="ref-card__tags"><span>Веб-концепція</span><span>Продакшн-версія</span><span>Інтерактив</span></div>
+    </a>
+
     <a class="ref-card" href="https://tabasco.com.ua/" target="_blank" rel="noopener">
       <div class="ref-card__head"><span class="ref-card__name">Tabasco</span><span class="ref-card__ext">↗</span></div>
-      <div class="ref-card__desc">Дизайн і реалізація «під ключ».</div>
+      <div class="ref-card__desc">Сайт рекламної агенції. Дизайн і реалізація «під ключ».</div>
       <div class="ref-card__tags"><span>Дизайн</span><span>Реалізація під ключ</span></div>
-    </a>
-
-    <a class="ref-card" href="https://adapwork.com/" target="_blank" rel="noopener">
-      <div class="ref-card__head"><span class="ref-card__name">Adapwork</span><span class="ref-card__ext">↗</span></div>
-      <div class="ref-card__desc">CAD із заводу → точна 3D-анімація за реальними моделями. Рендер і постпродакшн (не генерації).</div>
-      <div class="ref-card__tags"><span>Продуктовий дизайн</span><span>3D-анімація</span><span>Рендер + пост</span></div>
-    </a>
-
-    <a class="ref-card" href="https://chife-mod.github.io/verifly-web/concept-2/" target="_blank" rel="noopener">
-      <div class="ref-card__head"><span class="ref-card__name">Verifly · Концепт 2</span><span class="ref-card__ext">↗</span></div>
-      <div class="ref-card__desc">Концепція сайту + інтерактивні прототипи для розробників.</div>
-      <div class="ref-card__tags"><span>Веб-концепція</span><span>Інтерактивні прототипи</span></div>
-    </a>
-
-    <a class="ref-card" href="https://chife-mod.github.io/verifly-web/concept-1/" target="_blank" rel="noopener">
-      <div class="ref-card__head"><span class="ref-card__name">Verifly · Концепт 1</span><span class="ref-card__ext">↗</span></div>
-      <div class="ref-card__desc">Концепція сайту + інтерактивні прототипи для розробників.</div>
-      <div class="ref-card__tags"><span>Веб-концепція</span><span>Інтерактивні прототипи</span></div>
     </a>
 
   </div>
@@ -494,9 +488,8 @@ const CONFIG = {
   uahRate: 44.8568, uahDate: "28.07.2026",   // курс НБУ, фіксується на дату договору
   fop: 0.06,                 // ФОП 3 гр.: 5% ЄП + 1% військовий збір
   finalUSD: null,            // null = считаем; число = утверждённый фикс-Total
-  /* Менеджмент заведено ЯВНИМ блоком годин у SITEMAP (вказівка Олега 28.07), тому
-     відсоткова надбавка mgmt = 0 — інакше подвійний рахунок. */
-  commentsMin: 0.10, commentsMax: 0.10, mgmtMin: 0, mgmtMax: 0, hoursPerDay: 6,
+  /* Менеджмент — відсотковою надбавкою (рішення Олега 28.07), окремого блоку годин у SITEMAP немає. */
+  commentsMin: 0.10, commentsMax: 0.10, mgmtMin: 0.10, mgmtMax: 0.10, hoursPerDay: 6,
 };
 
 /* Client-facing rollup figures — что покупает клиент (НЕ внутренние блоки/плитки). */
@@ -591,12 +584,6 @@ const SITEMAP = [
       { name: "Навчання команди", desc: "Онлайн-сесія для редакторів: оновлення контенту та відкриття прихованих розділів.", min: 1.5, max: 2 },
   ]},
 
-  { name: "Проєктний менеджмент", work: true, tag: "Менеджмент",
-    caption: "Наскрізний блок на весь проєкт — окремим рядком, а не відсотком.",
-    sections: [
-      { name: "Ведення проєкту", desc: "Планування етапів, статуси, координація з командою Замовника, контроль строків і залежностей від матеріалів.", min: 5, max: 7 },
-      { name: "Погодження та ітерації", desc: "Збір і систематизація правок, узгодження змін, контроль раундів (включено до 2 раундів на етап).", min: 3, max: 5 },
-  ]},
 ];
 
 /* ─── Helpers ────────────────────────────────────────────────── */

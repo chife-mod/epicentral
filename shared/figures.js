@@ -8,10 +8,10 @@
  * розрахунок із цими значеннями і пише попередження в консоль, якщо вони розійшлись.
  */
 window.MOD_FIGURES = {
-  hoursMin: 57,
-  hoursMax: 90,
-  totalMin: 2326,      // з ФОП 6%
-  totalMax: 3673,
+  hoursMin: 49,
+  hoursMax: 78,
+  totalMin: 2181,      // з ФОП 6%, менеджмент — відсотком
+  totalMax: 3473,
   uahRate: 44.8568,
   uahDate: "28.07.2026",
   weeks: "3–5",
