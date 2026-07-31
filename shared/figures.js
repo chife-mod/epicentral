@@ -12,8 +12,8 @@ window.MOD_FIGURES = {
   hoursMax: 78,
   totalMin: 1870,      // з ФОП 6%, менеджмент — відсотком
   totalMax: 2976,
-  uahRate: 44.8568,
-  uahDate: "28.07.2026",
+  uahRate: 44.6916,
+  uahDate: "31.07.2026",
   weeks: "3–5",
   stages: 4,
   sectionsActive: 4,
